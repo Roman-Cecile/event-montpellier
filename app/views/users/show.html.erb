@@ -1,0 +1,15 @@
+<h1>Bienvenue sur votre page perso <%=@user.first_name%> <%=@user.last_name%></h1>
+
+<p>Adresse email <%=@user.email%> <%= link_to "Modifier",  edit_user_registration_path%></p>
+<p>Bio : <%=@user.description%></p> 
+
+
+<p>Evénements crées :</p>
+
+<% @events.each do |event|%>
+ <p><%=event.title%></p>
+ <p><%=event.duration%></p>
+<% end %>
+
+<p>Tu peux rajouter des informations sur ton profil en cliquant <%= link_to "ici", edit_user_path%></p> <!-- pas encore codé -->
+

@@ -1,0 +1,50 @@
+<h1><%=@event.title%></h1>
+<p>Date: <%=@event.start_date%></p>
+<p>Durée de l'événement: <%=@event.duration%> jours, l'événement finit le : <%=@event_finish%></p>
+<p>Lieu de l'événement: <%=@event.location%></p>
+<p>Description: <%=@event.description%></p>
+<p>Nombre de participants: <%=@count_attendees%><p>
+<p>Prix: <%=@event.price%> €</p>
+
+<% if user_signed_in?%>
+
+        <% unless @admin || @already_attendee%>
+
+            <p>Tu veux participer à cet event ?</p>
+        
+              <%= form_tag event_attendances_path(@event)do %>
+                  <article>
+                    <% if flash[:error].present? %>
+                      <div id="error_explanation">
+                        <p><%= flash[:error] %></p>
+                      </div>
+                    <% end %>
+                    <label class="amount">
+                      <span>Prix: <%=@event.price%></span>
+                    </label>
+                  </article>
+
+                  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                          data-description="A month's subscription"
+                          data-amount="500"
+                          data-locale="auto"></script>
+              <% end %>
+        <% else %>
+
+          <% if @already_attendee%>
+            <p>Tu participes à cet event!</p>
+
+          <% elsif @admin %>
+            <p><%= link_to 'Editer mon event', edit_event_path%></p>
+
+          <% end %>
+
+        <% end %>
+
+<% else %>
+
+  <p><%= link_to 'Connecte toi', new_user_session_path%> pour t'ajouter à l'événement</p>
+
+<% end %>
+
