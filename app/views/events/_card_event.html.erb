@@ -1,0 +1,33 @@
+<% if @user == current_user%>
+  <div class="container">
+    <div class="row">
+      <% @events.each do |event|%>
+        <div class="col-3">
+          <div class="card text-primary bg-light mb-3" style="max-width: 20rem;">
+            <div class="card-header"><a href="<%=event_path(event)%>"><%=event.title%></a></div>
+            <div class="card-body">
+              <h4 class="card-title"><%=event.administrator.first_name%></h4>
+              <p class="card-text"><%=event.description%></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="container">
+    <div class="row">
+      <% @events.each do |event|%>
+        <div class="col-3">
+          <div class="card text-primary bg-light mb-3" style="max-width: 20rem;">
+            <div class="card-header"><a href="<%=event_path(event)%>"><%=event.title%></a></div>
+            <div class="card-body">
+              <h4 class="card-title"><a href="<%=user_path(current_user)%>"><%=event.administrator.first_name%></a></h4>
+              <p class="card-text"><%=event.description%></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

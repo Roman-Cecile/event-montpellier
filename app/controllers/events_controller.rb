@@ -9,10 +9,11 @@ class EventsController < ApplicationController
     def show
         # Méthode qui récupère le event concerné et l'envoie à la view show (show.html.erb) pour affichage
         @event = Event.find(params[:id])
+        @attendees = Attendance.all
         @user = @event.users
         @admin = is_administrator?
         @event_finish = @event.start_date + (@event.duration*24*60*60)
-        @count_attendees = Attendance.where(attended_event: params[:id]).count
+        #@count_attendees = Attendance.where(attended_event: params[:id]).count
         @already_attendee = already_attendee?
         
 
@@ -21,7 +22,7 @@ class EventsController < ApplicationController
         puts "$"*60
         puts @admin
         puts "$"*60
-        puts @attendee
+        puts @attendees
         puts @attendee
         puts "$"*60
         
@@ -43,7 +44,7 @@ class EventsController < ApplicationController
     if @event.save
       
       flash[:notice] = "C'est bon !"
-      redirect_to event_path(current_user)
+      redirect_to events_path
     else
         #Saving failed, we can inspect @user.errors for more information
       flash.now[:error] = 'Alert message!'

@@ -1,0 +1,75 @@
+<div class="container" style="margin-top: 8px">
+  <div class="row">
+    <!-- Premier bloc -->
+    <div class="col-8">
+      <div class="card mb-3">
+        <h3 class="card-header"><%=@event.title%></h3>
+        <div class="card-body">
+          <h5 class="card-title">Lieu de l'événement: <%=@event.location%></h5>
+          <h6 class="card-subtitle text-muted">Date: <%=@event.start_date%></h6>
+        </div>
+        <img style="height: 500px; width: 100%; display: block;" src="#" alt="Card image">
+        <div class="card-body">
+          <p class="card-text">Description: <%=@event.description%></p>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Participent déjà :</p>
+        </div>
+        <!--Affiche les participants-->
+          <% @attendees.each do |attendee|%>
+        <div class="card">
+            <div class="card-body bg-light">
+              <h5 class="card-title"><%=attendee.user.first_name%></h5>
+            </div>
+        </div>
+          <% end %>
+      </div>
+    </div>
+    <!-- Deuxième bloc -->
+    <div class="col-4">
+      <div class="card mb-3">
+        <h3 class="card-header">Organisateur : <%=@event.administrator.first_name%></h3>
+        <img style="height: 200px; width: 100%; display: block;" src="#" alt="Card image">
+        <div class="card-body">
+          <p class="card-text"><%=@event.administrator.description%></p>
+          <button type="button" class="btn btn-primary btn-sm">Suivre</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <% if user_signed_in?%>
+            <% unless @admin || @already_attendee%>
+              <h4 class="card-title">Participez à l'évènement</h4>
+              <%= form_tag event_attendances_path(@event)do %>
+                <article>
+                  <% if flash[:error].present? %>
+                    <div id="error_explanation">
+                      <p><%= flash[:error] %></p>
+                    </div>
+                  <% end %>
+                  <label class="amount">
+                    <span>Prix: <%=@event.price%></span>
+                  </label>
+                </article>
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                                            data-description="A month's subscription"
+                                            data-amount="500"
+                                            data-locale="auto"></script>
+              <% end %>
+            <% else %>
+              <% if @already_attendee%>
+                <p>Tu participes à cet event!</p>
+              <% elsif @admin %>
+                <p><%= link_to 'Editer mon event', edit_event_path%></p>
+              <% end %>
+            <% end %>
+          <% else %>
+            <p><%= link_to 'Connecte toi', new_user_session_path%> pour t'ajouter à l'événement</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!-- Fin deuxième bloc>
+  </div>
+</div>

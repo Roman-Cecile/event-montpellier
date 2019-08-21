@@ -1,0 +1,28 @@
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if user_signed_in?%>
+      <div class="jumbotron-index">
+        <h1 class="display-4">Event Montpellier !</h1>
+        <p class="lead">Tous les évènements proches de chez toi réunis sur un seul site</p>
+        <hr class="my-4">
+        <p>Créer ton propre évènement !</p>
+        <a class="btn btn-primary btn-lg" href="<%=new_event_path%>" role="button">Créer</a>
+      </div>
+    <% else %>
+      <div class="jumbotron-index">
+        <h1 class="display-4">Event Montpellier !</h1>
+        <p class="lead">Tous les évènements proches de chez toi réunis sur un seul site</p>
+        <hr class="my-4">
+        <p>Connecte toi pour créer ton évènement</p>
+        <a class="btn btn-primary btn-lg" href="<%=new_user_session_path%>" role="button">Se connecter</a>
+      </div>
+    <% end %>
+  </body>
+</html>

@@ -30,6 +30,7 @@ gem 'table_print'
 gem 'faker'
 gem 'devise'
 gem 'stripe'
+gem 'htmlbeautifier'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
