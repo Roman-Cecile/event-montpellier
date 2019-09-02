@@ -21,9 +21,11 @@
                                   <div class="col-lg">
                                     <a href="#">Blog</a>
                                   </div>
+                                   <% if user_signed_in?%>
                                   <div class="col-lg">
                                     <a href="<%=user_path(current_user)%>">Profil</a>
                                   </div>                               
+                                    <% end %>
                               </div>
                       </div>
                       <div class="col-sm">
